@@ -38,15 +38,15 @@ import React  from "react";
 
 function Component() {
 
-  const store = useStore(appStore);
+  const { addUser, removeUser }  = useStore(appStore);
 
 
   function addUser() {
-    store.addUser(Math.trunc(Math.random() * 10000).toString())
+    addUser(Math.trunc(Math.random() * 10000).toString())
   }
 
   function removeUser(user: string) {
-    store.removeUser(user);
+    removeUser(user);
   }
 
   return <>
