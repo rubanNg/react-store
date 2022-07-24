@@ -31,7 +31,7 @@ class AppStore extends Store<{ users: string[] }> {
 export const appStore = createStore(new AppStore());
 
 
-// USAGE in COMPONENT
+// USAGE IN COMPONENT
 import { appStore } from "./example"
 import { useStore } from '../src/index'
 import React  from "react";
@@ -42,7 +42,7 @@ function Component() {
 
 
   function addUser() {
-    store.addUser(Math.trunc(Math.random()).toString())
+    store.addUser(Math.trunc(Math.random() * 10000).toString())
   }
 
   function removeUser(user: string) {
