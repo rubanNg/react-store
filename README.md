@@ -38,26 +38,26 @@ import React  from "react";
 
 function Component() {
 
-  const { addUser, removeUser }  = useStore(appStore);
+  const { addUser, removeUser, users }  = useStore(appStore);
 
 
-  function addUser() {
+  function _addUser() {
     addUser(Math.trunc(Math.random() * 10000).toString())
   }
 
-  function removeUser(user: string) {
+  function _removeUser(user: string) {
     removeUser(user);
   }
 
   return <>
-    <p><button onClick={addUser}>add user</button></p>
+    <p><button onClick={_addUser}>add user</button></p>
     <ul>
       { 
-        store.users.map(s => (
+        users.map(s => (
           <li>
             <div>
               { s }
-              <button onClick={() => removeUser(s)}>remove user</button>
+              <button onClick={() => _removeUser(s)}>remove user</button>
             </div>
           </li>
         )) 
