@@ -1,9 +1,9 @@
 import { Store } from "../classes/abstract-store";
-import { ActionsAndSelectors } from "../types";
+import { ActionsAndSelectors, PickField } from "../types";
 
 function defineProperties(object: any, type: "actions" | "selectors") {
 
-  for (const property in object[type]) {
+  for (const property in (object[type] || {})) {
     Object.defineProperty(object, property, {
       get: () => {
         if (typeof object[type][property] === "function") {
@@ -21,7 +21,7 @@ export function createStore<T extends ActionsAndSelectors>(instance: T) {
   defineProperties(instance, 'actions');
   defineProperties(instance, 'selectors');
 
-  type Actions = Pick<T, "actions">["actions"];
-  type Selectors = Pick<T, "selectors">["selectors"]
+  type Actions = PickField<T, "actions">;
+  type Selectors = PickField<T, "selectors">
   return instance as Actions & Selectors & Store;
 }

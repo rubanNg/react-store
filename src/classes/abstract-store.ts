@@ -1,8 +1,10 @@
+import produce from "immer"
+
 export abstract class Store<T = {}> {
 
   private state: T;
-  abstract selectors: Record<string, any>
-  abstract actions: Record<string, (payload: any) => void>
+  abstract selectors: Record<string, (...args: any[]) => any>
+  abstract actions: Record<string, (...args: any[]) => void>
   private _subscribes: (() => void)[] = [];
 
 
@@ -19,8 +21,13 @@ export abstract class Store<T = {}> {
   }
 
   set(updateFn: (state: T) => void) {
-    updateFn(this.state);
-    this._subscribes.forEach(subscriber => subscriber());
+    const updatedState = produce(this.state, (draft) => {
+      updateFn(draft as T);
+    });
+    if (updatedState !== this.state) {
+      this.state = updatedState;
+      this._subscribes.forEach(subscriber => subscriber());
+    }
   }
 
 

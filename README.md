@@ -13,7 +13,7 @@ class AppStore extends Store<{ users: string[] }> {
 
 
   selectors = {
-    users: this.get(s => s.users)
+    users: () => this.get(s => s.users)
   };
   actions = {
     addUser: (user: string) => {
